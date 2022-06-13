@@ -64,7 +64,8 @@ let should_report (astate : AbductiveDomain.summary) (diagnostic : Diagnostic.t)
   match diagnostic with
   | ConstRefableParameter _
   | MemoryLeak _
-  | ResourceLeak _
+  | JavaResourceLeak _
+  | CSharpResourceLeak _
   | RetainCycle _
   | StackVariableAddressEscape _
   | TaintFlow _
