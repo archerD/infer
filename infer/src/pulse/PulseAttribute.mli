@@ -86,6 +86,7 @@ type t =
   | MustBeValid of Timestamp.t * Trace.t * Invalidation.must_be_valid_reason option
   | MustNotBeTainted of {sinks: TaintSinkSet.t; procedures: TaintProcedureSet.t}
   | JavaResourceReleased
+  | CSharpResourceReleased
   | PropagateTaintFrom of taint_in list
   | RefCounted
   | SourceOriginOfCopy of {source: PulseAbstractValue.t; is_const_ref: bool}
