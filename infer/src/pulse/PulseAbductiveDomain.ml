@@ -350,6 +350,7 @@ module AddressAttributes = struct
 
 
   let java_resource_release address astate =
+      Printf.printf "AbductiveDomain java_resource_release";
     map_post_attrs astate ~f:(BaseAddressAttributes.java_resource_release address)
 
 
@@ -410,6 +411,7 @@ module AddressAttributes = struct
 
 
   let is_java_resource_released addr astate =
+      Printf.printf "AbductiveDomain is_java_resource_released";
     BaseAddressAttributes.is_java_resource_released addr (astate.post :> base_domain).attrs
 
 
@@ -779,6 +781,7 @@ let skipped_calls_match_pattern astate =
 
 
 let check_memory_leaks ~live_addresses ~unreachable_addresses astate =
+    Printf.printf "Checking for leaks\n";
   let reaches_into addr addrs astate =
     AbstractValue.Set.mem addr addrs
     || BaseDomain.GraphVisit.fold_from_addresses (Seq.return addr) astate ~init:()
