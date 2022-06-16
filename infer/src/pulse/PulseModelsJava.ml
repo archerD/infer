@@ -60,7 +60,6 @@ let call_may_throw_exception (exn : JavaClassName.t) : model =
   let astate, ref = PulseOperations.eval_var path location ret_var astate in
   let obj = (ret_addr, ret_alloc_hist) in
   let<*> astate = PulseOperations.write_deref path location ~ref ~obj astate in
-  Printf.printf "hello java call_may_throw_exception\n";
   [Ok (ExceptionRaised astate)]
 
 
@@ -139,7 +138,6 @@ end
 
 module Resource = struct
   let allocate_aux ~exn_class_name ((this, _) as this_obj) delegation_opt : model =
-   Printf.printf "\nhi java resource 1\n";
    fun ({location; callee_procname; path} as model_data) astate ->
     let[@warning "-8"] (Some (Typ.JavaClass class_name)) =
       Procname.get_class_type_name callee_procname
@@ -159,7 +157,6 @@ module Resource = struct
           call_may_throw_exception (JavaClassName.from_string cn) model_data astate )
     in
     let ret = delegated_state @ exn_state in
-    Printf.printf "\nhi java resource 2 (%i)\n" (List.length ret);
     ret
 
 
@@ -180,16 +177,12 @@ module Resource = struct
 
 
   let release this : model =
-   Printf.printf "\nbye java resource 1\n";
    fun _ astate ->
-    Printf.printf "\nbye java resource 2\n";
     PulseOperations.java_resource_release ~recursive:true (fst this) astate |> Basic.ok_continue
 
 
   let release_this_only this : model =
-   Printf.printf "\nbye java resource 1\n";
    fun _ astate ->
-    Printf.printf "\nbye java resource 2\n";
     PulseOperations.java_resource_release ~recursive:false (fst this) astate |> Basic.ok_continue
 end
 
