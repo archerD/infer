@@ -353,6 +353,10 @@ module AddressAttributes = struct
     map_post_attrs astate ~f:(BaseAddressAttributes.java_resource_release address)
 
 
+  let csharp_resource_release address astate =
+    map_post_attrs astate ~f:(BaseAddressAttributes.csharp_resource_release address)
+
+
   let get_dynamic_type addr astate =
     BaseAddressAttributes.get_dynamic_type (astate.post :> base_domain).attrs addr
 
@@ -411,6 +415,10 @@ module AddressAttributes = struct
 
   let is_java_resource_released addr astate =
     BaseAddressAttributes.is_java_resource_released addr (astate.post :> base_domain).attrs
+
+
+  let is_csharp_resource_released addr astate =
+    BaseAddressAttributes.is_csharp_resource_released addr (astate.post :> base_domain).attrs
 
 
   let is_std_vector_reserved addr astate =

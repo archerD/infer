@@ -73,7 +73,7 @@ module Resource = struct
   let release ~exn_class_name this : model =
    fun model_data astate ->
     let ok_state =
-        PulseOperations.java_resource_release ~recursive:true (fst this) astate |> Basic.ok_continue
+        PulseOperations.csharp_resource_release ~recursive:true (fst this) astate |> Basic.ok_continue
     in
     let exn_state =
       Option.value_map exn_class_name ~default:[] ~f:(fun cn ->
@@ -83,7 +83,7 @@ module Resource = struct
 
   let _release_this_only this : model =
    fun _ astate ->
-    PulseOperations.java_resource_release ~recursive:false (fst this) astate |> Basic.ok_continue
+    PulseOperations.csharp_resource_release ~recursive:false (fst this) astate |> Basic.ok_continue
 end
 
 let string_length_access = HilExp.Access.FieldAccess PulseOperations.ModeledField.string_length
